@@ -1,0 +1,151 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day, Brooklyn 💝</title>
+    <style>
+        :root {
+            --pink: #ff4d88;
+            --hot: #ff2e63;
+            --soft: #fff0f6;
+            --purple: #7c3aed;
+            --text: #2b2b2b;
+            --card: #ffffffcc;
+        }
+
+        body {
+            margin: 0;
+            background-color: #FFD1DC;
+            font-family: "Arial", sans-serif;
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #a83255;
+            text-shadow: 2px 2px 4px #000;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #500638;
+        }
+
+        iframe {
+            margin-top: 20px;
+            border: none;
+        }
+
+        /* floating hearts in background */
+        .heart-float {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            transform: rotate(45deg);
+            opacity: 0.25;
+            animation: drift 8s linear infinite;
+            filter: blur(.2px);
+        }
+
+        .heart-float::before, .heart-float::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ff2e63;
+        }
+
+        .heart-float {
+            background: #ff2e63;
+        }
+
+        .heart-float::before {
+            left: -8px;
+        }
+
+        .heart-float::after {
+            top: -8px;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translateY(120vh) rotate(45deg);
+            }
+
+            to {
+                transform: translateY(-30vh) rotate(45deg);
+            }
+        }
+
+        .question {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 8px 0 16px;
+            color: #5f0b29;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-row button {
+            padding: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .yes-btn {
+            background: linear-gradient(180deg, #ff4d88, #a855f7);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(255, 46, 99, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Hearts -->
+    <script>
+        const makeBgHearts = () => {
+            const count = 26;
+            for (let i = 0; i < count; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart-float';
+                const left = Math.random() * 100;
+                const size = 10 + Math.random() * 18;
+                const dur = 7 + Math.random() * 10;
+                const delay = -Math.random() * dur;
+                h.style.left = left + 'vw';
+                h.style.width = size + 'px';
+                h.style.height = size + 'px';
+                h.style.animationDuration = dur + 's';
+                h.style.animationDelay = delay + 's';
+                document.body.appendChild(h);
+            }
+        };
+        makeBgHearts();
+    </script>
+
+    <h1>Happy Valentine’s Day, Brooklyn 💘</h1>
+    <p>This special Valentine’s day page is made just for YOU ♥</p>
+
+    <!-- Background music -->
+    <iframe width="480" height="270"
+        src="https://www.youtube.com/embed/SGA-sMOwFMs?autoplay=1&loop=1" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
+
+    <div class="btn-row">
+        <button class="yes-btn" onclick="alert('YES! 💞')">Yes 💖</button>
+        <button onclick="alert('Haha try again! NO won’t work here.')">No 🙅🏽‍♂️</button>
+    </div>
+</body>
+</html>

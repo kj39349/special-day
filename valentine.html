@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine for Brooklyn 💘</title>
+  <style>
+    :root{
+      --pink:#ff4d88;
+      --hot:#ff2e63;
+      --soft:#fff0f6;
+      --purple:#7c3aed;
+      --text:#2b2b2b;
+      --card:#ffffffcc;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 800px at 20% 10%, #ffd1e3 0%, transparent 55%),
+        radial-gradient(900px 700px at 90% 20%, #e9d5ff 0%, transparent 55%),
+        radial-gradient(1000px 900px at 50% 100%, #ffe4f0 0%, #fff 55%);
+      position:relative;
+    }
+
+    /* floating hearts in background */
+    .heart-float{
+      position:absolute;
+      width:16px; height:16px;
+      transform: rotate(45deg);
+      opacity:.25;
+      animation: drift 10s linear infinite;
+      filter: blur(.2px);
+    }
+    .heart-float::before, .heart-float::after{
+      content:"";
+      position:absolute;
+      width:16px; height:16px;
+      background:var(--hot);
+      border-radius:50%;
+    }
+    .heart-float{background:var(--hot)}
+    .heart-float::before{left:-8px}
+    .heart-float::after{top:-8px}
+
+    @keyframes drift{
+      from{ transform: translateY(120vh) rotate(45deg); }
+      to{ transform: translateY(-30vh) rotate(45deg); }
+    }
+
+    /* card */
+    .wrap{
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      position:relative;
+      z-index:2;
+    }
+    .card{
+      width:min(720px, 92vw);
+      background:var(--card);
+      border: 1px solid #ffffffaa;
+      border-radius:24px;
+      padding:28px 24px 22px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .title{
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.1;
+      margin:0 0 10px;
+      color:#b1004b;
+      text-shadow: 0 6px 22px rgba(255,46,99,.25);
+    }
+    .subtitle{
+      margin:0 0 18px;
+      font-size: clamp(15px, 2vw, 18px);
+      opacity:.85;
+    }
+    .name{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, #ff4d88, #a855f7);
+      color:white;
+      font-weight:700;
+      letter-spacing:.2px;
+      box-shadow: 0 10px 26px rgba(168,85,247,.25);
+    }
+
+    .question{
+      margin:18px 0 18px;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight:800;
+      color:#3a0a2a;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    button{
+      border:none;
+      border-radius:16px;
+      padding:14px 20px;
+      font-weight:800;
+      font-size:18px;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      user-select:none;
+    }
+
+    #yesBtn{
+      background: linear-gradient(180deg, #ff2e63, #ff4d88);
+      color:white;
+      box-shadow: 0 14px 30px rgba(255,46,99,.32);
+    }
+    #yesBtn:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 34px rgba(255,46,99,.38); }
+    #yesBtn:active{ transform: translateY(0px) scale(.99); }
+
+    /* the NO button is positioned absolutely so it can run away */
+    #noBtn{
+      background: linear-gradient(180deg, #fff, #ffe4f0);
+      color:#7a1b48;
+      box-shadow: 0 14px 28px rgba(0,0,0,.10);
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, 70px);
+      pointer-events:none;   /* NOT CLICKABLE */
+    }
+
+    /* balloons */
+    .balloons{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+    }
+    .balloon{
+      position:absolute;
+      width:64px;
+      height:78px;
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: inset -10px -14px 0 rgba(0,0,0,.07);
+      animation: floatUp 9s ease-in-out infinite;
+      opacity:.95;
+    }
+    .balloon::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:-6px;
+      width:10px;
+      height:10px;
+      background:inherit;
+      transform: translateX(-50%) rotate(45deg);
+      border-radius: 0 0 3px 0;
+      box-shadow: inset -4px -4px 0 rgba(0,0,0,.07);
+    }
+    .string{
+      position:absolute;
+      left:50%;
+      top:78px;
+      width:2px;
+      height:120px;
+      background: rgba(0,0,0,.12);
+      transform: translateX(-50%);
+      border-radius:999px;
+    }
+
+    @keyframes floatUp{
+      0%,100%{ transform: translateY(0) }
+      50%{ transform: translateY(-18px) }
+    }
+
+    /* confetti hearts when YES */
+    .pop{
+      position:fixed;
+      left:0; top:0;
+      width:10px; height:10px;
+      transform: rotate(45deg);
+      background: var(--hot);
+      pointer-events:none;
+      z-index:10;
+      opacity:.95;
+    }
+    .pop::before, .pop::after{
+      content:"";
+      position:absolute;
+      width:10px; height:10px;
+      border-radius:50%;
+      background: inherit;
+    }
+    .pop::before{ left:-5px }
+    .pop::after{ top:-5px }
+
+    .msg{
+      margin-top:14px;
+      font-size:16px;
+      opacity:.9;
+      min-height:24px;
+    }
+
+    /* small footer */
+    .tiny{
+      margin-top:10px;
+      font-size:12px;
+      opacity:.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- background hearts -->
+  <script>
+    // create floating hearts in background
+    const makeBgHearts = () => {
+      const count = 26;
+      for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className = 'heart-float';
+        const left = Math.random()*100;
+        const size = 10 + Math.random()*18;
+        const dur = 7 + Math.random()*10;
+        const delay = -Math.random()*dur;
+        h.style.left = left + 'vw';
+        h.style.width = size + 'px';
+        h.style.height = size + 'px';
+        h.style.animationDuration = dur + 's';
+        h.style.animationDelay = delay + 's';
+        h.style.opacity = (0.12 + Math.random()*0.25).toFixed(2);
+        document.body.appendChild(h);
+      }
+    };
+    makeBgHearts();
+  </script>
+
+  <!-- balloons layer -->
+  <div class="balloons" aria-hidden="true">
+    <div class="balloon" style="left:6vw; top:10vh; background:#ff4d88; animation-duration:8.5s;">
+      <div class="string"></div>
+    </div>
+    <div class="balloon" style="left:14vw; top:55vh; background:#a855f7; animation-duration:9.2s;">
+      <div class="string" style="height:140px;"></div>
+    </div>
+    <div class="balloon" style="left:78vw; top:16vh; background:#ff2e63; animation-duration:8.8s;">
+      <div class="string" style="height:130px;"></div>
+    </div>
+    <div class="balloon" style="left:88vw; top:62vh; background:#ff77a9; animation-duration:9.6s;">
+      <div class="string" style="height:150px;"></div>
+    </div>
+    <div class="balloon" style="left:50vw; top:8vh; background:#ffb3d1; animation-duration:10.2s;">
+      <div class="string" style="height:115px;"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <h1 class="title">Happy Valentine’s Day 💘</h1>
+      <p class="subtitle">
+        Hey <span class="name">Brooklyn Allgood</span>… I have an important question.
+      </p>
+
+      <div class="question">Will you be my Valentine?</div>
+
+      <div class="btn-row">
+        <button id="yesBtn" type="button">YES 💖</button>
+        <!-- NO button is absolutely positioned so it can dodge -->
+        <button id="noBtn" type="button" aria-disabled="true">NO 🙅‍♀️</button>
+      </div>
+
+      <div class="msg" id="msg"></div>
+      <div class="tiny">Tip: Try clicking “NO” 😏</div>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const msg = document.getElementById('msg');
+    const card = document.getElementById('card');
+
+    // Keep NO inside the card bounds
+    function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+    // Place NO initially within card
+    function placeNoInitial(){
+      const r = card.getBoundingClientRect();
+      // Start near bottom center
+      const x = r.width/2;
+      const y = r.height/2 + 90;
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+      noBtn.style.transform = 'translate(-50%, -50%)';
+    }
+    placeNoInitial();
+    addEventListener('resize', placeNoInitial);
+
+    // Make NO run away when pointer gets close
+    function dodge(px, py){
+      const r = card.getBoundingClientRect();
+      const b = noBtn.getBoundingClientRect();
+
+      // pointer position relative to card
+      const x = px - r.left;
+      const y = py - r.top;
+
+      // current button center relative to card
+      const bx = (b.left - r.left) + b.width/2;
+      const by = (b.top - r.top) + b.height/2;
+
+      const dx = bx - x;
+      const dy = by - y;
+      const dist = Math.hypot(dx, dy);
+
+      const danger = 140; // how close before it moves
+      if(dist > danger) return;
+
+      // move away from pointer
+      const push = 160;
+      const nx = bx + (dx / (dist || 1)) * push + (Math.random()*40 - 20);
+      const ny = by + (dy / (dist || 1)) * push + (Math.random()*40 - 20);
+
+      // clamp inside card with padding
+      const pad = 18;
+      const minX = pad + b.width/2;
+      const maxX = r.width - pad - b.width/2;
+      const minY = pad + b.height/2 + 10;
+      const maxY = r.height - pad - b.height/2;
+
+      const cx = clamp(nx, minX, maxX);
+      const cy = clamp(ny, minY, maxY);
+
+      noBtn.style.left = cx + 'px';
+      noBtn.style.top = cy + 'px';
+      noBtn.style.transform = 'translate(-50%, -50%)';
+    }
+
+    // Track mouse/touch near the NO button
+    card.addEventListener('mousemove', (e) => dodge(e.clientX, e.clientY), {passive:true});
+    card.addEventListener('touchmove', (e) => {
+      const t = e.touches && e.touches[0];
+      if(t) dodge(t.clientX, t.clientY);
+    }, {passive:true});
+
+    // Celebrate when YES clicked
+    function spawnHeartsBurst(){
+      const bursts = 40;
+      const cx = window.innerWidth/2;
+      const cy = window.innerHeight/2;
+
+      for(let i=0;i<bursts;i++){ 
+        const p = document.createElement('div');
+        p.className = 'pop';
+        p.style.left = cx + 'px';
+        p.style.top = cy + 'px';
+        // random color vibe
+        const colors = ['#ff2e63','#ff4d88','#a855f7','#ff77a9','#ffb3d1'];
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+        const angle = Math.random()*Math.PI*2;
+        const speed = 5 + Math.random()*8;
+        let vx = Math.cos(angle)*speed;
+        let vy = Math.sin(angle)*speed;
+        let life = 0;
+
+        document.body.appendChild(p);
+
+        const tick = () => {
+          life += 1;
+          vx *= 0.98;
+          vy = vy*0.98 + 0.15; // gravity
+          const x = parseFloat(p.style.left) + vx;
+          const y = parseFloat(p.style.top) + vy;
+          p.style.left = x + 'px';
+          p.style.top = y + 'px';
+          p.style.opacity = String(Math.max(0, 1 - life/70));
+          p.style.transform = `rotate(45deg) scale(${1 + life/120})`;
+          if(life < 70) requestAnimationFrame(tick);
+          else p.remove();
+        };
+        requestAnimationFrame(tick);
+      }
+    }
+
+    yesBtn.addEventListener('click', () => {
+      msg.innerHTML = "YAY!! 💞 I knew you’d say yes, Brooklyn! 🥰";
+      spawnHeartsBurst();
+      // gentle pulse on card
+      card.animate(
+        [{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],
+        {duration:520, easing:'ease-out'}
+      );
+    });
+  </script>
+</body>
+</html>
